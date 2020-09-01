@@ -22,7 +22,7 @@ yy = yy * 5
 local player = PlayerPedId()
 local ped = PlayerPedId()
 
-local enabled = true
+local enabled = false
 
 RegisterCommand('hose', function(source, args, raw)
 	if enabled == true then
@@ -73,7 +73,7 @@ Citizen.CreateThread(function()
 			Citizen.Wait(0)
 
 			if GetSelectedPedWeapon(PlayerPedId()) == GetHashKey('WEAPON_FIREEXTINGUISHER')  and (IsControlJustPressed(0, 24) or IsDisabledControlPressed(0, 24)) and not pressed then
-				print('c1')
+				--print('c1')
 				if enabled then
 					--UseParticleFxAsset(firehose.dictionary)
 					--particleEffect = StartNetworkedParticleFxLoopedOnEntity( firehose.particle, PlayerPedId(), 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 5.0, false, false, false )
@@ -83,7 +83,7 @@ Citizen.CreateThread(function()
 			end
 
 			if GetSelectedPedWeapon(PlayerPedId()) == GetHashKey('WEAPON_FIREEXTINGUISHER') then
-				print('c2')
+				--print('c2')
 				if enabled then
 					DisablePlayerFiring(PlayerId(), true)
 					DisableControlAction(0, 24, true)
@@ -95,7 +95,7 @@ Citizen.CreateThread(function()
 			end
 
 			if (IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24)) and pressed then
-				print('c3')
+				--print('c3')
 				if enabled then
 					--StopParticleFxLooped(particleEffect, 0)
 					TriggerServerEvent('StartParticleFxEffect:PhaseThree')
@@ -148,10 +148,10 @@ local particleEffectSync2 = 0
 RegisterNetEvent('Hose:StartParticle')
 AddEventHandler("Hose:StartParticle", function(dict, ptfx, posx, posy, posz, source)
     Citizen.CreateThread(function()
-        --UseParticleFxAssetNextCall(dict)
-        --local pfx = StartParticleFxLoopedAtCoord(ptfx, posx, posy, posz, 0.0, 0.0, GetEntityHeading(GetPlayerPed(GetPlayerFromServerId(source))), 1.0, false, false, false, false)
+        UseParticleFxAssetNextCall(dict)
+        local pfx = StartParticleFxLoopedAtCoord(ptfx, posx, posy, posz, 0.0, 0.0, GetEntityHeading(GetPlayerPed(GetPlayerFromServerId(source))), 1.0, false, false, false, false)
         Citizen.Wait(100)
-		--StopParticleFxLooped(pfx, 0)
+		StopParticleFxLooped(pfx, 0)
     end)
 end)
 
