@@ -19,8 +19,8 @@ local xx,yy,zz = table.unpack(GetEntityForwardVector(playerPed))
 xx = xx * 5
 yy = yy * 5
 
-local player = PlayerPedId()
-local ped = PlayerPedId()
+local player = GetPlayerPed(-1)
+local ped = GetPlayerPed(-1)
 
 local enabled = false
 
@@ -72,17 +72,17 @@ Citizen.CreateThread(function()
 	while true do
 			Citizen.Wait(0)
 
-			if GetSelectedPedWeapon(PlayerPedId()) == GetHashKey('WEAPON_FIREEXTINGUISHER')  and (IsControlJustPressed(0, 24) or IsDisabledControlPressed(0, 24)) and not pressed then
+			if GetSelectedPedWeapon(GetPlayerPed(-1)) == GetHashKey('WEAPON_FIREEXTINGUISHER')  and (IsControlJustPressed(0, 24) or IsDisabledControlPressed(0, 24)) and not pressed then
 				--print('c1')
 				if enabled then
 					--UseParticleFxAsset(firehose.dictionary)
-					--particleEffect = StartNetworkedParticleFxLoopedOnEntity( firehose.particle, PlayerPedId(), 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 5.0, false, false, false )
+					--particleEffect = StartNetworkedParticleFxLoopedOnEntity( firehose.particle, GetPlayerPed(-1), 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 5.0, false, false, false )
 					pressed = true
 					TriggerServerEvent('StartParticleFxEffect:PhaseOne')
 				end
 			end
 
-			if GetSelectedPedWeapon(PlayerPedId()) == GetHashKey('WEAPON_FIREEXTINGUISHER') then
+			if GetSelectedPedWeapon(GetPlayerPed(-1)) == GetHashKey('WEAPON_FIREEXTINGUISHER') then
 				--print('c2')
 				if enabled then
 					DisablePlayerFiring(PlayerId(), true)
@@ -109,7 +109,7 @@ function StartParticleFxEffect(dict, ptfx, posx, posy, posz)
 
     Citizen.CreateThread(function()
         UseParticleFxAssetNextCall(dict)
-        local pfx = StartParticleFxLoopedAtCoord(ptfx, posx, posy, posz, 0.0, 0.0, GetEntityHeading(PlayerPedId()), 1.0, false, false, false, false)
+        local pfx = StartParticleFxLoopedAtCoord(ptfx, posx, posy, posz, 0.0, 0.0, GetEntityHeading(GetPlayerPed(-1)), 1.0, false, false, false, false)
         Citizen.Wait(100)
         StopParticleFxLooped(pfx, 0)
     end)
@@ -124,7 +124,7 @@ Citizen.CreateThread(function()
 
 		if pressed then
 			Citizen.Wait(100)
-			local offset = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 12.0 + GetGameplayCamRelativePitch()* 0.4, 0.0)
+			local offset = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 12.0 + GetGameplayCamRelativePitch()* 0.4, 0.0)
 			local x = offset.x
 			local y = offset.y
 
