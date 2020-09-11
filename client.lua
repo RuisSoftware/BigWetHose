@@ -158,29 +158,29 @@ end)
 
 RegisterNetEvent('Hose:PhaseOne')
 AddEventHandler("Hose:PhaseOne", function(source)
-    
-    UseParticleFxAsset(firehose.dictionary)
-	particleEffectSync = StartNetworkedParticleFxLoopedOnEntity( firehose.particle, GetPlayerPed(GetPlayerFromServerId(source)), 10.0, 0.0, 0.0, 0.1, 0.0, 0.0, 1.0, false, false, false )
-	UseParticleFxAsset(firehose.dictionary)
-    particleEffectSync2 = StartNetworkedParticleFxLoopedOnEntity( firehose.particletwo, GetPlayerPed(GetPlayerFromServerId(source)), 10.0, 0.0, 0.0, 0.1, 0.0, 0.0, 1.0, false, false, false )
-
+    Citizen.CreateThread(function()
+    	UseParticleFxAsset(firehose.dictionary)
+		particleEffectSync = StartNetworkedParticleFxLoopedOnEntity( firehose.particle, GetPlayerPed(GetPlayerFromServerId(source)), 10.0, 0.0, 0.0, 0.1, 0.0, 0.0, 1.0, false, false, false )
+		UseParticleFxAsset(firehose.dictionary)
+    	particleEffectSync2 = StartNetworkedParticleFxLoopedOnEntity( firehose.particletwo, GetPlayerPed(GetPlayerFromServerId(source)), 10.0, 0.0, 0.0, 0.1, 0.0, 0.0, 1.0, false, false, false )
+    end)
 end)
 
 
 RegisterNetEvent('Hose:PhaseTwo')
 AddEventHandler("Hose:PhaseTwo", function(pitch, source)
-
-	SetParticleFxLoopedOffsets( particleEffectSync, 0.0, 0.0, 0.0, pitch, 0.0, 0.0 )
-	SetParticleFxLoopedOffsets( particleEffectSync2, 0.0, 8.0, 0.0, 0.0, 0.0, 0.0 )
-
+	Citizen.CreateThread(function()
+		SetParticleFxLoopedOffsets( particleEffectSync, 0.0, 0.0, 0.0, pitch, 0.0, 0.0 )
+		SetParticleFxLoopedOffsets( particleEffectSync2, 0.0, 8.0, 0.0, 0.0, 0.0, 0.0 )
+	end)
 end)
 
 
 RegisterNetEvent('Hose:PhaseThree')
 AddEventHandler("Hose:PhaseThree", function(source)
-
-	StopParticleFxLooped(particleEffectSync, 0)
-	StopParticleFxLooped(particleEffectSync2, 0)
-
+	Citizen.CreateThread(function()
+		StopParticleFxLooped(particleEffectSync, 0)
+		StopParticleFxLooped(particleEffectSync2, 0)
+	end)
 end)
 
