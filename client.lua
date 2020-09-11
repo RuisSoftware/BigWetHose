@@ -145,16 +145,6 @@ end)
 
 local particleEffectSync = 0
 local particleEffectSync2 = 0
-RegisterNetEvent('Hose:StartParticle')
-AddEventHandler("Hose:StartParticle", function(dict, ptfx, posx, posy, posz, source)
-    Citizen.CreateThread(function()
-        UseParticleFxAssetNextCall(dict)
-        local pfx = StartParticleFxNonLoopedAtCoord(ptfx, posx, posy, posz, 0.0, 0.0, GetEntityHeading(GetPlayerPed(GetPlayerFromServerId(source))), 1.0, false, false, false, false)
-        Citizen.Wait(100)
-	StopParticleFxLooped(pfx, 0)
-    end)
-end)
-
 
 RegisterNetEvent('Hose:PhaseOne')
 AddEventHandler("Hose:PhaseOne", function(source)
